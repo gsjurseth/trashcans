@@ -79,8 +79,8 @@ configurations {
     jaxb
 }
 
-jar {
-    baseName = 'gs-producing-web-service'
+war {
+    baseName = 'trashcans'
     version =  '0.1.0'
     from genJaxb.classesDir
 }
@@ -90,6 +90,7 @@ repositories {
 }
 
 dependencies {
+    providedCompile('org.springframework.boot:spring-boot-starter-tomcat')
     compile("org.springframework.boot:spring-boot-starter-web-services"){
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
