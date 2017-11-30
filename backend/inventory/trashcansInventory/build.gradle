@@ -1,0 +1,105 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.9.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'com.google.appengine:gradle-appengine-plugin:1.9.59'
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'appengine'
+apply plugin: 'org.springframework.boot'
+//apply plugin: "org.openrepose.gradle.plugins.jaxb"
+
+group = 'com.apigee.trashcans'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+appengine {
+    httpPort = 8085
+
+    appcfg {
+        email = 'gsjurseth@google.com'
+        passIn = true
+
+        logs {
+            severity = 1
+            outputFile = file('mylogs.txt')
+        }
+
+        app {
+            id = 'trashcans-inventory-app'
+        }
+    }
+}
+
+task genJaxb {
+    ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
+    ext.classesDir = "${buildDir}/classes/jaxb"
+    ext.schema = "src/main/resources/trashcans.xsd"
+
+    outputs.dir classesDir
+
+    doLast() {
+        project.ant {
+            taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
+                    classpath: configurations.jaxb.asPath
+            mkdir(dir: sourcesDir)
+            mkdir(dir: classesDir)
+
+            xjc(destdir: sourcesDir, schema: schema) {
+                arg(value: "-wsdl")
+                produces(dir: sourcesDir, includes: "**/*.java")
+            }
+
+            javac(destdir: classesDir, source: 1.8, target: 1.8, debug: true,
+                    debugLevel: "lines,vars,source",
+                    classpath: configurations.jaxb.asPath) {
+                src(path: sourcesDir)
+                include(name: "**/*.java")
+                include(name: "*.java")
+            }
+
+            copy(todir: classesDir) {
+                fileset(dir: sourcesDir, erroronmissingdir: false) {
+                    exclude(name: "**/*.java")
+                }
+            }
+        }
+    }
+}
+
+configurations {
+    jaxb
+}
+
+jar {
+    baseName = 'gs-producing-web-service'
+    version =  '0.1.0'
+    from genJaxb.classesDir
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web-services"){
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+    compileOnly("javax.servlet:javax.servlet-api")
+    compileOnly("org.slf4j:jul-to-slf4j")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    compile("wsdl4j:wsdl4j:1.6.1")
+    jaxb("org.glassfish.jaxb:jaxb-xjc:2.2.11")
+    compile(files(genJaxb.classesDir).builtBy(genJaxb))
+}
+
+
+

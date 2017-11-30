@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+				  xmlns:gs="http://spring.io/guides/gs-producing-web-service">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <gs:getTrashcanRequest>
+         <gs:name>First</gs:name>
+      </gs:getTrashcanRequest>
+   </soapenv:Body>
+ </soapenv:Envelope>
