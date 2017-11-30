@@ -9,6 +9,22 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="addTrashcanStockRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Trashcan" type="tns:Trashcan"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addTrashcanStockResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Trashcan" type="tns:Trashcan"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="getTrashcanResponse">
         <xs:complexType>
             <xs:sequence>
@@ -19,11 +35,12 @@
 
     <xs:complexType name="Trashcan">
         <xs:sequence>
-            <xs:element name="id" type="xs:string"/>
+            <xs:element name="id" type="xs:string" nillable="true"/>
             <xs:element name="name" type="xs:string"/>
             <xs:element name="stock" type="xs:int"/>
             <xs:element name="description" type="xs:string"/>
             <xs:element name="imageUrl" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
+
 </xs:schema>

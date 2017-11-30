@@ -39,4 +39,20 @@ public class TrashcanRepository {
     Assert.notNull(name, "The trashcan's name must not be null");
     return trashcans.get(name);
   }
+
+  public Trashcan addTrashcanStock(Trashcan tc) {
+    Assert.notNull(tc.getName(), "The trashcan's name must not be null");
+
+    Trashcan existingTC = findTrashcan(tc.getName());
+    if ( existingTC != null) {
+      existingTC.setStock( existingTC.getStock() + tc.getStock());
+      trashcans.put(existingTC.getName(), existingTC);
+    }
+    else {
+      tc.setId(UUID.randomUUID().toString());
+      trashcans.put(tc.getName(), tc);
+    }
+
+    return findTrashcan(tc.getName());
+  }
 }
