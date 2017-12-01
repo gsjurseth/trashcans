@@ -100,6 +100,11 @@ dependencies {
     compile("wsdl4j:wsdl4j:1.6.1")
     jaxb("org.glassfish.jaxb:jaxb-xjc:2.2.11")
     compile(files(genJaxb.classesDir).builtBy(genJaxb))
+    appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.28'
+
+    compile 'com.google.appengine:appengine-endpoints:1.9.28' //add this line to avoid upper comment
+    compile 'com.google.guava:guava:19.0'//add this
+    compile 'com.googlecode.objectify:objectify:5.1.17'  //works with ObjectifyFilter in web.xml
 }
 
 

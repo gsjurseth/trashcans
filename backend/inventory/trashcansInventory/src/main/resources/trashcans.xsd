@@ -1,5 +1,5 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://spring.io/guides/gs-producing-web-service"
-           targetNamespace="http://spring.io/guides/gs-producing-web-service" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://trashcans.apigee.com/inventory"
+  targetNamespace="http://trashcans.apigee.com/inventory" elementFormDefault="qualified">
 
     <xs:element name="getTrashcanRequest">
         <xs:complexType>
@@ -35,7 +35,7 @@
 
     <xs:complexType name="Trashcan">
         <xs:sequence>
-            <xs:element name="id" type="xs:string" nillable="true"/>
+            <xs:element name="id" type="xs:long" nillable="true" />
             <xs:element name="name" type="xs:string"/>
             <xs:element name="stock" type="xs:int"/>
             <xs:element name="description" type="xs:string"/>
