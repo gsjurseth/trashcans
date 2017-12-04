@@ -106,6 +106,3 @@ dependencies {
     compile 'com.google.guava:guava:19.0'//add this
     compile 'com.googlecode.objectify:objectify:5.1.17'  //works with ObjectifyFilter in web.xml
 }
-
-
-

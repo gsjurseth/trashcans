@@ -1,5 +1,7 @@
 package com.apigee.trashcans.inventory;
 
+import com.googlecode.objectify.ObjectifyFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +14,8 @@ import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
 
+import javax.servlet.Filter;
+
 @EnableWs
 @Configuration
 public class WebServiceConfig extends WsConfigurerAdapter {
@@ -21,6 +25,20 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     servlet.setApplicationContext(applicationContext);
     servlet.setTransformWsdlLocations(true);
     return new ServletRegistrationBean(servlet, "/ws/*");
+  }
+
+  @Bean
+  public FilterRegistrationBean ObjectifyFilterRegistration() {
+    FilterRegistrationBean registration = new FilterRegistrationBean();
+    registration.setFilter(ObjectifyFilter());
+    registration.addUrlPatterns("/ws/*");
+    registration.setName("ObjectifyFilter");
+    registration.setOrder(1);
+    return registration;
+  }
+
+  public Filter ObjectifyFilter() {
+    return new ObjectifyFilter();
   }
 
   @Bean(name = "trashcans")
