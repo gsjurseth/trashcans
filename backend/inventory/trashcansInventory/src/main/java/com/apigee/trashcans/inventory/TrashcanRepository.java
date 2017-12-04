@@ -1,6 +1,7 @@
 package com.apigee.trashcans.inventory;
 
 import javax.annotation.PostConstruct;
+import javax.validation.constraints.AssertTrue;
 import java.util.logging.Logger;
 
 import com.googlecode.objectify.ObjectifyService;
@@ -42,8 +43,20 @@ public class TrashcanRepository {
       @Override
       public void vrun() {
         logger.info("Before we try and insert" );
-        ofy().save().entity( first ).now();
-        ofy().save().entity( second ).now();
+        try {
+          Assert.notNull( findTrashcan(first.getName()) );
+        }
+        catch(RuntimeException ex) {
+          logger.warning("Initial value not found so adding first");
+          ofy().save().entity( first ).now();
+        }
+        try {
+          Assert.notNull( findTrashcan(second.getName()) );
+        }
+        catch(RuntimeException ex) {
+          logger.warning("Initial value not found so adding second");
+          ofy().save().entity( second ).now();
+        }
         logger.info("After we tried to insert" );
       }
     });
