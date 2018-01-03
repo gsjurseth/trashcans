@@ -1,46 +1,58 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://trashcans.apigee.com/inventory"
-  targetNamespace="http://trashcans.apigee.com/inventory" elementFormDefault="qualified">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://trashcans.apigee.com/inventory"
+        targetNamespace="http://trashcans.apigee.com/inventory" elementFormDefault="qualified">
 
-    <xs:element name="getTrashcanRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="name" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+    <element name="addTrashcanStockRequest">
+        <complexType>
+            <sequence>
+                <element name="Trashcan" type="tns:Trashcan"/>
+            </sequence>
+        </complexType>
+    </element>
 
-    <xs:element name="addTrashcanStockRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="Trashcan" type="tns:Trashcan"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+    <element name="addTrashcanStockResponse">
+        <complexType>
+            <sequence>
+                <element name="Trashcan" type="tns:Trashcan"/>
+            </sequence>
+        </complexType>
+    </element>
 
-    <xs:element name="addTrashcanStockResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="Trashcan" type="tns:Trashcan"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+    <element name="getTrashcanRequest">
+        <complexType>
+            <sequence>
+                <element name="name" type="string"/>
+            </sequence>
+        </complexType>
+    </element>
 
-    <xs:element name="getTrashcanResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="Trashcan" type="tns:Trashcan"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+    <element name="getTrashcanResponse">
+        <complexType>
+            <sequence>
+                <element name="Trashcan" type="tns:Trashcan"/>
+            </sequence>
+        </complexType>
+    </element>
 
-    <xs:complexType name="Trashcan">
-        <xs:sequence>
-            <xs:element name="id" type="xs:long" nillable="true" />
-            <xs:element name="name" type="xs:string"/>
-            <xs:element name="stock" type="xs:int"/>
-            <xs:element name="description" type="xs:string"/>
-            <xs:element name="imageUrl" type="xs:string"/>
-        </xs:sequence>
-    </xs:complexType>
+    <element name="TrashcanType">
+        <complexType>
+            <sequence>
+                <element name="id" type="long" nillable="true" />
+                <element name="name" type="string"/>
+                <element name="stock" type="int"/>
+                <element name="description" type="string"/>
+                <element name="imageUrl" type="string"/>
+            </sequence>
+        </complexType>
+    </element>
 
-</xs:schema>
+    <complexType name="Trashcan">
+        <sequence>
+            <element name="id" type="long" nillable="true" />
+            <element name="name" type="string"/>
+            <element name="stock" type="int"/>
+            <element name="description" type="string"/>
+            <element name="imageUrl" type="string"/>
+        </sequence>
+    </complexType>
+
+</schema>

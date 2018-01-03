@@ -34,7 +34,7 @@ appengine {
         }
 
         app {
-            id = 'trashcans-inventory-app'
+          id = 'inventory'
         }
     }
 }

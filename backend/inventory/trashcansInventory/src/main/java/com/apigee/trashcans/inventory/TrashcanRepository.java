@@ -2,6 +2,7 @@ package com.apigee.trashcans.inventory;
 
 import javax.annotation.PostConstruct;
 import javax.validation.constraints.AssertTrue;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.googlecode.objectify.ObjectifyService;
@@ -61,6 +62,27 @@ public class TrashcanRepository {
       }
     });
   }
+
+  /*
+   * Vain attempt to get contract first spring-ws to return a list by starting with xsd alone
+   * how the hell do you do this?
+  public List<TrashcanEntity> getTrashcans( int display, int offset) {
+    List<TrashcanEntity> trashcans;
+
+    logger.info("About to list trashcans starting with" + offset + " for a total of " + display + " records.");
+    try {
+      trashcans = ofy().load().type(TrashcanEntity.class).list();
+    }
+    catch (RuntimeException ex) {
+      trashcans = null;
+      logger.warning("We done failed to find any trashcans: " + ex.getMessage() );
+    }
+
+    logger.info("Found trashcans: "  + trashcans.toString() );
+    return trashcans;
+    //return trashcans.toArray( new TrashcanEntity[trashcans.size()]);
+  }
+   */
 
   public TrashcanEntity findTrashcan(String name) {
     Assert.notNull(name, "The trashcan's name must not be null");
