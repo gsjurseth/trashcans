@@ -33,25 +33,13 @@
         </complexType>
     </element>
 
-    <element name="TrashcanType">
-        <complexType>
-            <sequence>
-                <element name="id" type="long" nillable="true" />
-                <element name="name" type="string"/>
-                <element name="stock" type="int"/>
-                <element name="description" type="string"/>
-                <element name="imageUrl" type="string"/>
-            </sequence>
-        </complexType>
-    </element>
-
     <complexType name="Trashcan">
         <sequence>
-            <element name="id" type="long" nillable="true" />
-            <element name="name" type="string"/>
-            <element name="stock" type="int"/>
-            <element name="description" type="string"/>
-            <element name="imageUrl" type="string"/>
+            <element name="Id" type="long" nillable="true" />
+            <element name="Name" type="string"/>
+            <element name="Stock" type="int"/>
+            <element name="Description" type="string"/>
+            <element name="ImageUrl" type="string"/>
         </sequence>
     </complexType>
 

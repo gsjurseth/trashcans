@@ -14,7 +14,7 @@ public class TrashcanEntity extends Trashcan {
   private Long ID;
 
   @Index
-  private String name;
+  private String Name;
 
 
   public TrashcanEntity() {
@@ -30,12 +30,12 @@ public class TrashcanEntity extends Trashcan {
 
   @Override
   public String getName() {
-    return name;
+    return Name;
   }
 
   @Override
   public void setName(String name) {
-    this.name = name;
+    this.Name = name;
   }
 
   @Override
@@ -50,6 +50,6 @@ public class TrashcanEntity extends Trashcan {
 
   @Override
   public String toString() {
-    return String.format( "[ Id: %d, name: %s, stock: %d, description: %s, imageUrl: %s ]", this.ID, this.name, this.stock, this.description, this.imageUrl );
+    return String.format( "[ Id: %d, name: %s, stock: %d, description: %s, imageUrl: %s ]", this.ID, this.Name, this.Stock, this.Description, this.ImageUrl );
   }
 }
