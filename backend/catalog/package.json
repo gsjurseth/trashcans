@@ -1,0 +1,16 @@
+{
+  "name": "catalog",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "description": "Catalog service that combines data from pricing and search services",
+  "main": "index.js",
+  "author": "Geir Sjurseth",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "express": "^4.16.2",
+    "node-fetch": "^1.7.3"
+  }
+}
