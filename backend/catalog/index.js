@@ -7,11 +7,11 @@ fetch.Promise = Promise;
 
 /* some express and runtime constants */
 const app = new express();
-const searchSvc = 'https://search-dot-apigee-trashcan-backends.appspot.com/trashcans/';
-const pricingSvc = 'https://us-central1-trashcans-project.cloudfunctions.net/pricing/trashcans/';
+const searchSvc = 'http://search-dot-apigee-trashcan-backends.appspot.com/trashcans/';
+const pricingSvc = 'http://us-central1-trashcans-project.cloudfunctions.net/pricing/trashcans/';
 
 
-app.get('/', (req,res) => {
+app.get('/catalog', (req,res) => {
   fetch(pricingSvc)
     .then( d => d.json() )
     .map( d => {
