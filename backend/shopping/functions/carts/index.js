@@ -12,7 +12,7 @@ app.get("/howdy", (req, res) => {
   res.send("Howdy from this here script!");
 });
 
-app.get("/:id", jsonParser, (req, res) => {
+app.get("/:id", (req, res) => {
   let tcans = db.collection('carts').doc(req.params.id);
   tcans.get()
     .then( d => {
@@ -24,7 +24,7 @@ app.get("/:id", jsonParser, (req, res) => {
     });
 });
 
-app.delete("/:id", jsonParser, (req, res) => {
+app.delete("/:id", (req, res) => {
   return db.doc(`/carts/${req.params.id}`).delete()
     .then( r => res.json(r) )
     .catch( e => {
