@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: catalog
-        image: gcr.io/apigee-trashcan-backends/catalog:latest
+        image: gcr.io/apigee-trashcan-backends/catalog:v1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
@@ -54,4 +54,33 @@ spec:
         backend:
           serviceName: catalog
           servicePort: 3000
+---
+###########################################################################
+# EgressRules (allow access to our other services)
+##########################################################################
+apiVersion: config.istio.io/v1alpha2
+kind: EgressRule
+metadata:
+  name: httpbin-egress-rule
+spec:
+  destination:
+    service: search-dot-apigee-trashcan-backends.appspot.com
+  ports:
+    - port: 80
+      protocol: http
+    - port: 443
+      protocol: https
+---
+apiVersion: config.istio.io/v1alpha2
+kind: EgressRule
+metadata:
+  name: httpbin-egress-rule
+spec:
+  destination:
+    service: us-central1-trashcans-project.cloudfunctions.net
+  ports:
+    - port: 80
+      protocol: http
+    - port: 443
+      protocol: https
 ---
