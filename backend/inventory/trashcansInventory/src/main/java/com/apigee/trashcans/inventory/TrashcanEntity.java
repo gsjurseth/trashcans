@@ -16,6 +16,13 @@ public class TrashcanEntity extends Trashcan {
   @Index
   private String Name;
 
+  /*
+  private Integer Stock;
+
+  private String Description;
+
+  private String ImageURL;
+  */
 
   public TrashcanEntity() {
   }
@@ -25,7 +32,8 @@ public class TrashcanEntity extends Trashcan {
     this.ID = tc.getId();
     this.description = tc.getDescription();
     this.stock = tc.getStock();
-    this.imageUrl = tc.getImageUrl();
+    this.imageURL = tc.getImageURL();
+    this.thumbnailURL = tc.getThumbnailURL();
   }
 
   @Override
@@ -50,6 +58,6 @@ public class TrashcanEntity extends Trashcan {
 
   @Override
   public String toString() {
-    return String.format( "[ Id: %d, name: %s, stock: %d, description: %s, imageUrl: %s ]", this.ID, this.Name, this.Stock, this.Description, this.ImageUrl );
+    return String.format( "[ Id: %d, name: %s, stock: %d, description: %s, imageUrl: %s ]", this.ID, this.Name, this.stock, this.description, this.imageURL );
   }
 }

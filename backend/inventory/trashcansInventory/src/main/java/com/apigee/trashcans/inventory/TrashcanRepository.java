@@ -2,9 +2,13 @@ package com.apigee.trashcans.inventory;
 
 import javax.annotation.PostConstruct;
 import javax.validation.constraints.AssertTrue;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.apigee.trashcans.inventory.utils.ImageStore;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.VoidWork;
 import org.springframework.stereotype.Component;
@@ -28,17 +32,19 @@ public class TrashcanRepository {
     first.setName("First");
     first.setDescription("Stylish trashcan");
     first.setStock(100);
-    first.setImageUrl("https://images.containerstore.com/catalogimages/264105/10066752MetallaCanCopper_600.jpg?width=1200&height=1200&align=center");
-
+    ImageStore is1 = new ImageStore("copperCan");
+    try {
+      is1.storeImage(new URL("https://images.containerstore.com/catalogimages/264105/10066752MetallaCanCopper_600.jpg?width=1200&height=1200&align=center") );
+    }
+    catch(MalformedURLException ex) {
+      logger.severe("Malformed image url");
+    }
+    catch(IOException ex) {
+      logger.severe( "io exception dealing with the image, yo");
+    }
+    first.setImageURL("https://images.containerstore.com/catalogimages/264105/10066752MetallaCanCopper_600.jpg?width=1200&height=1200&align=center");
+    first.setThumbnailURL("https://images.containerstore.com/catalogimages/264105/10066752MetallaCanCopper_600.jpg?width=1200&height=1200&align=center");
     logger.info("The first one: " + first.toString() );
-
-    TrashcanEntity second = new TrashcanEntity();
-    second.setName("Second");
-    second.setDescription("The home of Oscar the grouch");
-    second.setStock(200);
-    second.setImageUrl("https://vignette.wikia.nocookie.net/muppet/images/5/5b/Oscar-can.png/revision/latest/scale-to-width-down/316?cb=20120117061845");
-
-    logger.info("The second one: " + second.toString() );
 
     run(new VoidWork() {
       @Override
@@ -51,14 +57,6 @@ public class TrashcanRepository {
           logger.warning("Initial value not found so adding first");
           ofy().save().entity( first ).now();
         }
-        try {
-          Assert.notNull( findTrashcan(second.getName()) );
-        }
-        catch(RuntimeException ex) {
-          logger.warning("Initial value not found so adding second");
-          ofy().save().entity( second ).now();
-        }
-        logger.info("After we tried to insert" );
       }
     });
   }

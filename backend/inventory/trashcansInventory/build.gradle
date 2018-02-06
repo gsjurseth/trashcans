@@ -105,4 +105,5 @@ dependencies {
     compile 'com.google.appengine:appengine-endpoints:1.9.28' //add this line to avoid upper comment
     compile 'com.google.guava:guava:19.0'//add this
     compile 'com.googlecode.objectify:objectify:5.1.17'  //works with ObjectifyFilter in web.xml
+    compile group: 'com.google.cloud', name: 'google-cloud-storage', version: '1.16.0'
 }
