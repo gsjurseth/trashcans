@@ -14,11 +14,12 @@ const message = `{"statusCode": 200, "msg": "Hello World"}`
 const dudeMessage = `{"statusCode": 200, "msg": "Hello World, Dude!"}`
 
 type TrashcanEntity struct {
-	Name        string `datastore:"name"`
-	Description string `datastore:"description,noindex"`
-	ImageUrl    string `datastore:"imageUrl,noindex"`
-	Stock       int    `datastore:"stock,noindex"`
-	Id          int    `datastore:"id"`
+	Name         string `datastore:"name"`
+	Description  string `datastore:"description,noindex"`
+	ImageURL     string `datastore:"imageURL,noindex"`
+	ThumbnailURL string `datastore:"thumbnailURL,noindex"`
+	Stock        int    `datastore:"stock,noindex"`
+	Id           int    `datastore:"Key"`
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
