@@ -19,7 +19,6 @@ type TrashcanEntity struct {
 	ImageURL     string `datastore:"imageURL,noindex"`
 	ThumbnailURL string `datastore:"thumbnailURL,noindex"`
 	Stock        int    `datastore:"stock,noindex"`
-	Id           int    `datastore:"Key"`
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
