@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import com.apigee.trashcans.inventory.utils.ImageStore;
@@ -32,9 +33,11 @@ public class TrashcanRepository {
     first.setName("First");
     first.setDescription("Stylish trashcan");
     first.setStock(100);
+    first.setId( UUID.randomUUID().toString() );
     ImageStore is1 = new ImageStore("copperCan");
     try {
-      is1.storeImage(new URL("https://images.containerstore.com/catalogimages/264105/10066752MetallaCanCopper_600.jpg?width=1200&height=1200&align=center") );
+      is1.storeImage(
+          new URL("https://images.containerstore.com/catalogimages/264105/10066752MetallaCanCopper_600.jpg?width=1200&height=1200&align=center") );
     }
     catch(MalformedURLException ex) {
       logger.severe("Malformed image url");
@@ -42,8 +45,8 @@ public class TrashcanRepository {
     catch(IOException ex) {
       logger.severe( "io exception dealing with the image, yo");
     }
-    first.setImageURL("https://images.containerstore.com/catalogimages/264105/10066752MetallaCanCopper_600.jpg?width=1200&height=1200&align=center");
-    first.setThumbnailURL("https://images.containerstore.com/catalogimages/264105/10066752MetallaCanCopper_600.jpg?width=1200&height=1200&align=center");
+    first.setImageURL(is1.getImageURL());
+    first.setThumbnailURL(is1.getThumbnailURL());
     logger.info("The first one: " + first.toString() );
 
     run(new VoidWork() {
@@ -60,27 +63,6 @@ public class TrashcanRepository {
       }
     });
   }
-
-  /*
-   * Vain attempt to get contract first spring-ws to return a list by starting with xsd alone
-   * how the hell do you do this?
-  public List<TrashcanEntity> getTrashcans( int display, int offset) {
-    List<TrashcanEntity> trashcans;
-
-    logger.info("About to list trashcans starting with" + offset + " for a total of " + display + " records.");
-    try {
-      trashcans = ofy().load().type(TrashcanEntity.class).list();
-    }
-    catch (RuntimeException ex) {
-      trashcans = null;
-      logger.warning("We done failed to find any trashcans: " + ex.getMessage() );
-    }
-
-    logger.info("Found trashcans: "  + trashcans.toString() );
-    return trashcans;
-    //return trashcans.toArray( new TrashcanEntity[trashcans.size()]);
-  }
-   */
 
   public TrashcanEntity findTrashcan(String name) {
     Assert.notNull(name, "The trashcan's name must not be null");

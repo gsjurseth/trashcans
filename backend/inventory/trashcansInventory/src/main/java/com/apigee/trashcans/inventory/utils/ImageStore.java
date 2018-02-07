@@ -1,13 +1,14 @@
 package com.apigee.trashcans.inventory.utils;
 
+import com.google.apphosting.api.ApiProxy;
 import com.google.cloud.sql.jdbc.internal.Url;
 import com.google.cloud.storage.*;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
@@ -15,12 +16,29 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class ImageStore {
+  public String getImageURL() {
+    return ImageURL;
+  }
+
+  public void setImageURL(String imageURL) {
+    ImageURL = imageURL;
+  }
+
+  public String getThumbnailURL() {
+    return ThumbnailURL;
+  }
+
+  public void setThumbnailURL(String thumbnailURL) {
+    ThumbnailURL = thumbnailURL;
+  }
+
   private String ImageURL;
   private String ThumbnailURL;
   private String TrashcanName;
   private static Storage storage = null;
 
   final private String BucketName = "apigee-trashcan-backends.appspot.com";
+  final private String BaseBucketURL = "http://storage.googleapis.com/" + BucketName + '/';
 
   static {
     storage = StorageOptions.getDefaultInstance().getService();
@@ -64,23 +82,59 @@ public class ImageStore {
    return storage.create(blobInfo, data);
   }
 
+  private byte[] scaleImage(byte[] fileData, String format, int width, int height) {
+    ByteArrayInputStream in = new ByteArrayInputStream(fileData);
+    try {
+      BufferedImage img = ImageIO.read(in);
+      if(height == 0) {
+        height = (width * img.getHeight())/ img.getWidth();
+      }
+      if(width == 0) {
+        width = (height * img.getWidth())/ img.getHeight();
+      }
+      Image scaledImage = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+      BufferedImage imageBuff = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+      imageBuff.getGraphics().drawImage(scaledImage, 0, 0, new Color(0,0,0), null);
+
+      ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+      ImageIO.write(imageBuff, format, buffer);
+
+      return buffer.toByteArray();
+    } catch (IOException e) {
+      // word
+      return null;
+    }
+  }
+
   /**
    * Extracts the file payload from an HttpServletRequest, checks that the file extension
    * is supported and uploads the file to Google Cloud Storage.
    */
-  public String storeImage(URL url) throws IOException, RuntimeException {
+  public void storeImage(URL url) throws IOException, RuntimeException {
 
 
+    // some gymnastics to get extensions, content and such
     String fileName = getBasename(url);
+    int i = fileName.lastIndexOf('.');
+    String ext = fileName.substring( i + 1 );
     URLConnection uc = url.openConnection();
     String contentType = uc.getContentType();
 
-    // Get bytes
+    // Get bytes of the image and then get bytes of thumbnail
     byte[] data = getImage(url);
+    byte[] tnail = scaleImage(data, ext,110, 0);
 
-    Blob blob;
-    BlobId blobId = BlobId.of(BucketName, this.TrashcanName);
-    BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(contentType).build();
+    // now we can create blobs
+    Blob blobImage;
+    Blob blobTNail;
+
+    String imageFileName = this.TrashcanName + "/" + this.TrashcanName + "." + ext;
+    String thumbnailFileName = this.TrashcanName + "/" + this.TrashcanName + "_thumbnail." + ext;
+    BlobId blobImageID = BlobId.of(BucketName, imageFileName);
+    BlobId blobTNailID = BlobId.of(BucketName, thumbnailFileName);
+    BlobInfo blobInfoImage = BlobInfo.newBuilder(blobImageID).setContentType(contentType).build();
+    BlobInfo blobInfoTNail = BlobInfo.newBuilder(blobTNailID).setContentType(contentType).build();
 
     // Check extension of file and upload if all is good
     if (fileName != null && !fileName.isEmpty() && fileName.contains(".")) {
@@ -88,10 +142,13 @@ public class ImageStore {
       String[] allowedExt = { "jpg", "jpeg", "png", "gif" };
       for (String s : allowedExt) {
         if (extension.equals(s)) {
-          blob = this.uploadFile(blobInfo,data);
+          blobImage = this.uploadFile(blobInfoImage,data);
+          blobTNail = this.uploadFile(blobInfoTNail,tnail);
+          setImageURL(BaseBucketURL + imageFileName);
+          setThumbnailURL( BaseBucketURL + thumbnailFileName);
         }
       }
     }
-    return fileName;
+
   }
 }

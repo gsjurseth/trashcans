@@ -35,7 +35,7 @@
 
     <complexType name="Trashcan">
         <sequence>
-            <element name="Id" type="long" nillable="true" />
+            <element name="Id" type="string" nillable="true" />
             <element name="Name" type="string"/>
             <element name="Stock" type="int"/>
             <element name="Description" type="string"/>
