@@ -49,16 +49,39 @@ public class TrashcanRepository {
     first.setThumbnailURL(is1.getThumbnailURL());
     logger.info("The first one: " + first.toString() );
 
+    // and the 2nd one
+    TrashcanEntity second = new TrashcanEntity();
+    second.setName("Second");
+    second.setDescription("It's just a cartoon. It's not real!");
+    second.setStock(100);
+    second.setId( UUID.randomUUID().toString() );
+    ImageStore is2 = new ImageStore("cartoonCan");
+    try {
+      is2.storeImage(
+          new URL("https://vignette.wikia.nocookie.net/clubpenguin/images/e/e3/Trashcan_furniture_icon.png") );
+    }
+    catch(MalformedURLException ex) {
+      logger.severe("Malformed image url");
+    }
+    catch(IOException ex) {
+      logger.severe( "io exception dealing with the image, yo");
+    }
+    second.setImageURL(is2.getImageURL());
+    second.setThumbnailURL(is2.getThumbnailURL());
+    logger.info("The first one: " + first.toString() );
+
     run(new VoidWork() {
       @Override
       public void vrun() {
         logger.info("Before we try and insert" );
         try {
           Assert.notNull( findTrashcan(first.getName()) );
+          Assert.notNull( findTrashcan(second.getName()) );
         }
         catch(RuntimeException ex) {
           logger.warning("Initial value not found so adding first");
           ofy().save().entity( first ).now();
+          ofy().save().entity( second ).now();
         }
       }
     });
@@ -97,6 +120,22 @@ public class TrashcanRepository {
     if ( existingTC != null) {
       tce = new TrashcanEntity( existingTC );
       tce.setStock( existingTC.getStock() + tc.getStock());
+    }
+    else {
+      ImageStore is = new ImageStore( tc.getName() );
+      try {
+        is.storeImage(
+            new URL( tc.getImageURL() ) );
+      }
+      catch(MalformedURLException ex) {
+        logger.severe("Malformed image url");
+      }
+      catch(IOException ex) {
+        logger.severe( "io exception dealing with the image, yo");
+      }
+      tce.setImageURL(is.getImageURL());
+      tce.setThumbnailURL(is.getThumbnailURL());
+      tce.setId( UUID.randomUUID().toString() );
     }
 
     logger.info("Attempting to add this trashcan specifically: " + tce.toString() );

@@ -40,7 +40,7 @@
             <element name="Stock" type="int"/>
             <element name="Description" type="string"/>
             <element name="ImageURL" type="string"/>
-            <element name="ThumbnailURL" type="string"/>
+            <element name="ThumbnailURL" type="string" nillable="true"/>
         </sequence>
     </complexType>
 
