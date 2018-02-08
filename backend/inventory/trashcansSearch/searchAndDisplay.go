@@ -84,7 +84,7 @@ func displayTrashcan(w http.ResponseWriter, r *http.Request) {
 		log.Errorf(ctx, "Received damned ErrFieldMismatch error: %v .. But fetched this record: %v", err, k)
 	}
 	log.Infof(ctx, "Trashcan records: %v", cans)
-	json.NewEncoder(w).Encode(cans)
+	json.NewEncoder(w).Encode(cans[0])
 }
 
 func init() {
