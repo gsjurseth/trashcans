@@ -7,8 +7,8 @@ fetch.Promise = Promise;
 
 /* some express and runtime constants */
 const app = new express();
-const searchSvc = 'https://search-dot-apigee-trashcan-backends.appspot.com/trashcans/';
-const pricingSvc = 'https://us-central1-trashcans-project.cloudfunctions.net/pricing/trashcans/';
+const searchSvc   = 'http://gsjurseth-eval-test.apigee.net/inventory/v1/trashcans/';
+const pricingSvc  = 'http://gsjurseth-eval-test.apigee.net/shopping/v1/pricing/trashcans';
 
 
 app.get('/catalog', (req,res) => {
