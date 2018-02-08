@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="getSOAPFields">
+    <DisplayName>getSOAPFields</DisplayName>
+    <JSONPayload>
+        <Variable name="name">
+            <JSONPath>$.name</JSONPath>
+        </Variable>
+        <Variable name="stock">
+            <JSONPath>$.stock</JSONPath>
+        </Variable>
+        <Variable name="description">
+            <JSONPath>$.description</JSONPath>
+        </Variable>
+        <Variable name="imageURL">
+            <JSONPath>$.imageURL</JSONPath>
+        </Variable>
+    </JSONPayload>
+</ExtractVariables>

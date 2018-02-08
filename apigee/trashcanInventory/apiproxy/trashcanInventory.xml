@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="2" name="trashcanInventory">
+    <Basepaths>/inventory/v1/trashcans</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1518081644362</CreatedAt>
+    <CreatedBy>gsjurseth@google.com</CreatedBy>
+    <Description>handle inventory. Also used in shopping carts as a backend</Description>
+    <DisplayName>trashcanInventory</DisplayName>
+    <LastModifiedAt>1518094632770</LastModifiedAt>
+    <LastModifiedBy>gsjurseth@google.com</LastModifiedBy>
+    <Policies>
+        <Policy>getResponseElements</Policy>
+        <Policy>getSOAPFields</Policy>
+        <Policy>setPayloadAfterAdd</Policy>
+        <Policy>setSOAPPayload</Policy>
+        <Policy>xformToJSON</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources/>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+    <validate>false</validate>
+</APIProxy>

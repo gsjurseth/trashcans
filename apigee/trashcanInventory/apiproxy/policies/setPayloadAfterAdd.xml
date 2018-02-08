@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="setPayloadAfterAdd">
+    <DisplayName>setPayloadAfterAdd</DisplayName>
+    <Properties/>
+    <Set>
+        <Payload contentType="application/json">\{
+        "name": "{name}",
+        "stock": "{stock}",
+        "description": "{description}",
+        "imageURL": "{imageURL}",
+        "thumbnailURL": "{thumbnailURL}"
+        }</Payload>
+    </Set>
+</AssignMessage>

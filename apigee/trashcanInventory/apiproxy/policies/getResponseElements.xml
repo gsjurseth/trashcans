@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="getResponseElements">
+    <DisplayName>getResponseElements</DisplayName>
+    <JSONPayload>
+        <Variable name="name">
+            <JSONPath>$.Envelope.Body.addTrashcanStockResponse.Trashcan.Name</JSONPath>
+        </Variable>
+        <Variable name="stock">
+            <JSONPath>$.Envelope.Body.addTrashcanStockResponse.Trashcan.Stock</JSONPath>
+        </Variable>
+        <Variable name="description">
+            <JSONPath>$.Envelope.Body.addTrashcanStockResponse.Trashcan.Description</JSONPath>
+        </Variable>
+        <Variable name="imageURL">
+            <JSONPath>$.Envelope.Body.addTrashcanStockResponse.Trashcan.ImageURL</JSONPath>
+        </Variable>
+        <Variable name="thumbnailURL">
+            <JSONPath>$.Envelope.Body.addTrashcanStockResponse.Trashcan.ThumbnailURL</JSONPath>
+        </Variable>
+    </JSONPayload>
+</ExtractVariables>

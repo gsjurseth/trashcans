@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="setSOAPPayload">
+    <DisplayName>setSOAPPayload</DisplayName>
+    <Properties/>
+    <Set>
+        <Payload contentType="text/xml;charset=UTF-8">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://trashcans.apigee.com/inventory">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <inv:addTrashcanStockRequest>
+                        <inv:Trashcan>
+                            <inv:Id/>
+                            <inv:Name>{name}</inv:Name>
+                            <inv:Stock>{stock}</inv:Stock>
+                            <inv:Description>{description}</inv:Description>
+                            <inv:ImageURL>{imageURL}</inv:ImageURL>
+                        </inv:Trashcan>
+                    </inv:addTrashcanStockRequest>
+                </soapenv:Body>
+            </soapenv:Envelope>
+        </Payload>
+    </Set>
+</AssignMessage>

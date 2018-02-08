@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <RouteRule name="getSingleTrashcanStockInfo">
+        <Condition>(proxy.pathsuffix MatchesPath "/{name}") and (request.verb = "GET")</Condition>
+        <URL>https://search-dot-apigee-trashcan-backends.appspot.com/trashcans</URL>
+    </RouteRule>
+    <RouteRule name="getTrashcanInventory">
+        <Condition>(proxy.pathsuffix MatchesPath "/") and (request.verb = "GET")</Condition>
+        <URL>https://search-dot-apigee-trashcan-backends.appspot.com/trashcans</URL>
+    </RouteRule>
+    <Description/>
+    <FaultRules/>
+    <PreFlow name="PreFlow">
+        <Request/>
+        <Response/>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response/>
+    </PostFlow>
+    <Flows>
+        <Flow name="AddTrashcanStock">
+            <Description>used to update stock inventory of trashcans</Description>
+            <Request>
+                <Step>
+                    <Name>getSOAPFields</Name>
+                </Step>
+                <Step>
+                    <Name>setSOAPPayload</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>xformToJSON</Name>
+                </Step>
+                <Step>
+                    <Name>getResponseElements</Name>
+                </Step>
+                <Step>
+                    <Name>setPayloadAfterAdd</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/") and (request.verb = "POST")</Condition>
+        </Flow>
+        <Flow name="getTrashcanInventory">
+            <Description>gets a list of trashcans .. Supports searches</Description>
+            <Request/>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="getSingleTrashcanStockInfo">
+            <Description>Retrieves an individual trashcan's information</Description>
+            <Request/>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/{name}") and (request.verb = "GET")</Condition>
+        </Flow>
+    </Flows>
+    <HTTPProxyConnection>
+        <BasePath>/inventory/v1/trashcans</BasePath>
+        <Properties/>
+        <VirtualHost>default</VirtualHost>
+        <VirtualHost>secure</VirtualHost>
+    </HTTPProxyConnection>
+    <RouteRule name="default">
+        <TargetEndpoint>default</TargetEndpoint>
+    </RouteRule>
+</ProxyEndpoint>
