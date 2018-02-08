@@ -99,12 +99,16 @@ public class TrashcanRepository {
       tce = null;
       logger.warning("We done failed to find the trashcan: " + ex.getMessage() );
     }
+    logger.info("After try/catch");
 
     if (tce != null) {
       logger.info("Found this trashcan: "  + tce.toString() );
+      //weird bug not populating name on the way out
+      tce.setName( tce.getName() );
       return tce;
     }
     else {
+      logger.info("tce was evidently null");
       return null;
     }
   }
@@ -114,14 +118,16 @@ public class TrashcanRepository {
 
     logger.info("Attempting to add a new trashcan");
 
-    TrashcanEntity tce =  new TrashcanEntity(tc);
-
     TrashcanEntity existingTC = findTrashcan(tc.getName());
+    TrashcanEntity tce;
+
     if ( existingTC != null) {
+      logger.info("Found existing trashcan so updating stock: " + tc.getName() );
       tce = new TrashcanEntity( existingTC );
       tce.setStock( existingTC.getStock() + tc.getStock());
     }
     else {
+      tce = new TrashcanEntity(tc);
       ImageStore is = new ImageStore( tc.getName() );
       try {
         is.storeImage(

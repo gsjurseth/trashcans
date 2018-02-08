@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class TrashcanEntity extends Trashcan {
 
   @Id
-  private String id;
+  private String Id;
 
   @Index
   private String name;
@@ -29,7 +29,7 @@ public class TrashcanEntity extends Trashcan {
 
   public TrashcanEntity(Trashcan tc) {
     this.name = tc.getName();
-    this.id = tc.getId();
+    this.Id = tc.getId();
     this.description = tc.getDescription();
     this.stock = tc.getStock();
     this.imageURL = tc.getImageURL();
@@ -44,20 +44,21 @@ public class TrashcanEntity extends Trashcan {
   @Override
   public void setName(String name) {
     this.name = name;
+    super.setName( name );
   }
 
   @Override
   public String getId() {
-    return id;
+    return Id;
   }
 
   @Override
   public void setId(String id) {
-    this.id = id;
+    this.Id = id;
   }
 
   @Override
   public String toString() {
-    return String.format( "[ Id: %s, name: %s, stock: %d, description: %s, imageUrl: %s ]", this.id, this.name, this.stock, this.description, this.imageURL );
+    return String.format( "[ Id: %s, name: %s, stock: %d, description: %s, imageUrl: %s ]", this.Id, this.name, this.stock, this.description, this.imageURL );
   }
 }
