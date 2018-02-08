@@ -19,7 +19,7 @@ app.get('/catalog', (req,res) => {
         .then( r => r.json()  )
         .then( r => {
           console.log('here I am with the r: %j', r);
-          return Object.assign({}, r[0], {price: d.price});
+          return Object.assign({}, r, {price: d.price});
         });
     })
     .then( d => {
