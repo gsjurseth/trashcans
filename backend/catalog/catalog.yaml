@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: catalog
-        image: gcr.io/apigee-trashcan-backends/catalog:v3
+        image: gcr.io/apigee-trashcan-backends/catalog:v4
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
