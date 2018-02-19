@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SharedFlowBundle revision="1" name="TrashcanInternalSecurity">
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1518518895624</CreatedAt>
+    <CreatedBy>gsjurseth@google.com</CreatedBy>
+    <Description>undefined</Description>
+    <DisplayName>TrashcanInternalSecurity</DisplayName>
+    <LastModifiedAt>1518518935897</LastModifiedAt>
+    <LastModifiedBy>gsjurseth@google.com</LastModifiedBy>
+    <Policies>
+        <Policy>SpikeArrest</Policy>
+        <Policy>verifyOAuth</Policy>
+    </Policies>
+    <Resources/>
+    <Spec></Spec>
+    <subType>SharedFlow</subType>
+    <validate>false</validate>
+    <SharedFlows>
+        <SharedFlow>default</SharedFlow>
+    </SharedFlows>
+</SharedFlowBundle>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SharedFlowBundle revision="1" name="VerifyGoogleJWT">
+    <ConfigurationVersion minorVersion="0" majorVersion="4"/>
+    <Description>A proxy that validates JWT signed by Google Sign-in</Description>
+    <CreatedAt>1408643295583</CreatedAt>
+    <CreatedBy>DChiesa@google.com</CreatedBy>
+    <DisplayName>jwt-verify-goog</DisplayName>
+    <LastModifiedAt>1481862518324</LastModifiedAt>
+    <LastModifiedBy>DChiesa@google.com</LastModifiedBy>
+    <Policies>
+      <Policy>AM-JWT-Parse-Response</Policy>
+      <Policy>AV-GoogleJwks</Policy>
+      <Policy>CacheInsert-GoogleJwks</Policy>
+      <Policy>CacheLookup-GoogleJwks</Policy>
+      <Policy>EV-JWT</Policy>
+      <Policy>RF-MissingHeader</Policy>
+      <Policy>RF-UnknownRequest</Policy>
+      <Policy>SC-RetrieveGoogleJwks</Policy>
+      <Policy>Verify-JWT-1</Policy>
+    </Policies>
+    <Resources/>
+    <Spec></Spec>
+    <subType>SharedFlow</subType>
+    <validate>false</validate>
+    <SharedFlows>
+        <SharedFlow>default</SharedFlow>
+    </SharedFlows>
+</SharedFlowBundle>
