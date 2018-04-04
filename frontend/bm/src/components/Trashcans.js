@@ -10,9 +10,14 @@ const mapStateToProps = state => {
 
 const ConnectedTrashcans = ({ i, fetchTrashcanStock }) => {
   return (
-      <div>
-        <button onClick={fetchTrashcanStock}>Fetch Trashcans</button>
-        <Grid columns='equal'>
+      <div class="container">
+        <div class="ui segment">
+          <div class="title">Fetch Trashcan Inventory</div>
+          <div calss="content">
+            <a onClick={fetchTrashcanStock} id="fetchTrashcanStock">Fetch Trashcans</a>
+          </div>
+        </div>
+        <Grid columns='four'>
           {
             i.map( row => {
               return (

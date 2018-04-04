@@ -5,7 +5,9 @@ import rootReducer from "./reducers";
 import { loginEpic, fetchTrashcanStockEpic } from './epics';
 
 const loggerMiddleware = createLogger()
-const epicMiddleware = createEpicMiddleware(combineEpics(fetchTrashcanStockEpic,loginEpic));
+const epicMiddleware = createEpicMiddleware(
+  combineEpics( fetchTrashcanStockEpic, loginEpic )
+);
 
 
 export default createStore(
