@@ -1,11 +1,11 @@
 import React from 'react'
 import chunk from 'chunk'
-import { Grid, Card, Icon } from 'semantic-ui-react'
+import { Grid, Card, Icon, Modal, Button, Image, Header } from 'semantic-ui-react'
 import { connect } from "react-redux";
 import { fetchTrashcanStock } from "../actions"
 
 const mapStateToProps = state => {
-  return { i: chunk(state.trashcanStock,3) };
+  return { i: chunk(state.rootReducer.trashcanStock,3) };
 };
 
 const ConnectedTrashcans = ({ i, fetchTrashcanStock }) => {
@@ -26,6 +26,7 @@ const ConnectedTrashcans = ({ i, fetchTrashcanStock }) => {
                   row.map( t => ( <Trashcan
                     id={t.idx}
                     thumbnailURL={t.thumbnailURL}
+                    imageURL={t.imageURL}
                     name={t.name}
                     stock={t.stock}
                     description={t.description} /> ))
@@ -42,18 +43,29 @@ const ConnectedTrashcans = ({ i, fetchTrashcanStock }) => {
 class Trashcan extends React.Component {
 
     constructor(props) {
+        console.log('our props: %j', props);
         super(props);
     }
 
     render() {
-        const { thumbnailURL, name, stock, description} = this.props;
+        const { thumbnailURL, imageURL, name, stock, description} = this.props;
         return (<Grid.Column>
-                <Card
-                    image={thumbnailURL}
-                    header={name}
-                    meta={"Stock: " + stock}
-                    description={description}
-                />
+                <Card size="small">
+                    <Image src={thumbnailURL} size='small' />
+                    <Card.Header>{name}</Card.Header>
+                    <Card.Meta>{"Stock: " + stock}</Card.Meta>
+                    <Card.Description>{description}</Card.Description>
+                </Card>
+                  <Modal trigger={<Button>Show Detail</Button>}>
+                    <Modal.Header>Select a Photo</Modal.Header>
+                    <Modal.Content image>
+                      <Image wrapped size='medium' src={imageURL} />
+                      <Modal.Description>
+                        <Header>Stock: {stock}</Header>
+                        {description}
+                      </Modal.Description>
+                    </Modal.Content>
+                  </Modal>
             </Grid.Column>);
     }
 }

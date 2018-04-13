@@ -6,10 +6,10 @@ const config = require('../config');
 
 export const fetchTrashcanStockEpic = (action$,st) =>
   action$.ofType(at.FETCH_TRASHCAN_STOCK)
-    .filter( () => (st.getState().loginInfo.access_token !== 'not logged in'))
+    .filter( () => (st.getState().rootReducer.loginInfo.access_token !== 'not logged in'))
     .mergeMap( action =>
       ajax({ url: config.stockUrl,
-        headers: { "Accept": "application/json", "Authorization": "Bearer " + st.getState().loginInfo.access_token } })
+        headers: { "Accept": "application/json", "Authorization": "Bearer " + st.getState().rootReducer.loginInfo.access_token } })
         .map( d => d.response)
         .map(actions.trashcanStockFetched)
     );

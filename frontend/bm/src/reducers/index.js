@@ -1,4 +1,6 @@
 import { LOGIN, LOGIN_FULFILLED, FETCH_TRASHCAN_STOCK, TRASHCAN_STOCK_FETCHED } from "../constants/action-types";
+import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
 
 const initialState = {
     loginInfo: {
@@ -43,4 +45,7 @@ const rootReducer = (state = initialState, action) => {
       return state;
   }
 };
-export default rootReducer;
+export default combineReducers( {
+  rootReducer,
+  routing: routerReducer }
+);
